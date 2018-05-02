@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring boot 的excel上传下载 </title>
+</head>
+<body>
+<div align="center">
+    <h3>Spring boot 的excel上传下载</h3>
+    <div align="center" style="margin-top: 50px">
+        <div style="width: 320px; height:200px;border: 0px solid darkgrey;">
+            <div style="float: left;">
+                <form th:action="@{/upload}" method="POST" enctype="multipart/form-data" id="myForm">
+                    <input type="file" name="file1" id="tmpFile"/>
+                    <input type="submit" value="上传"/><br/>
+                </form>
+            </div>
+            <div style="float: left; margin-top: 20px">
+                <small><a style="cursor: pointer;" th:href="@{/download}">模板下载</a></small>
+            </div>
+
+            <div style="width: auto; height:auto;margin-top:20px;border: 0px solid darkgrey;">
+                <ul th:each="map:${data}" style="float: left">
+                    <!--<li><span th:text="${map.key}"></span> \ <span th:text="${map.value}"></span></li>-->
+                    <li th:if="${map.key} =='errorMsg' ">
+                        MESSAGE: <span th:text="${map.value}"></span>
+                    </li>
+                    <li th:if="${map.key} =='cloudServerList' ">
+                        <table border="1px">
+                            <thead>
+                            <tr>
+                                <th>instanceName</th>
+                                <th>ip</th>
+                                <th>hostname</th>
+                                <th>systemUser</th>
+                                <th>adminUser</th>
+                            </tr>
+                            </thead>
+                            <tr th:each="v:${map.value}">
+                                <td th:text="${v.instanceName}"></td>
+                                <td th:text="${v.ip}"></td>
+                                <td th:text="${v.hostname}"></td>
+                                <td th:text="${v.systemUser}"></td>
+                                <td th:text="${v.adminUser}"></td>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</body>
+</html>
